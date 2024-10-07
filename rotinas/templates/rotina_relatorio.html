@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Relatório Diário{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<link rel="stylesheet" href="../../static/css/pages/rotina_relatorio.css"
+
+{% endblock %}
+{% block content %}
+<div>
+    <h2>Relatórios de tarefas</h2>
+</div>
+<div class="container">
+    <table border="1" class="table">
+        {% for rotina in rotinas %}
+        <thead>
+            <tr>
+                <th class="div">{{rotina.data}}</th>
+                <th class="div">{{rotina.user_nome}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class = "hora" >{{rotina.horario}}</td>
+            <td type="text" class="atividade" >{{rotina.tarefa}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Rotinas Diárias{% endblock %}
+
+{% block head %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<link rel="stylesheet" href="../../static/css/pages/rotina.css"
+{% endblock %}
+
+{% block content %}
+<div id="mensagem" style="display: none;"></div>
+<div class="main-container">
+    <div class="container">
+      <label>Selecione a data de preenchimento:</label>
+      <select class="registro" name="registro" id="registro">
+        {% for dia in registros[:1] %}
+        <option value="{{dia.dia}}">{{ dia.dia }} </option>
+        {%endfor%}
+        {%for registro in registros[:5] %}
+        <option value="{{ registro.registro }}" >{{ registro.registro }} </option>
+        {%endfor%}
+      </select>
+    </div>
+    <h1 style="background-color: darkorange;">Rotinas Diárias</h1>
+       <form class="form_rotina" id="form">
+            <table class="form-table" border="1">
+              <thead>
+                <tr>
+                  <th>Horário</th>
+                  <th>Atividades</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class = "hora" >08:00</td>
+                  <td><input type="text" class="atividade"  placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >08:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >09:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >09:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >10:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >10:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >11:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >11:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >12:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >12:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >13:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >13:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >14:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >14:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >15:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >15:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >16:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >16:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >17:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >17:30</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+                <tr>
+                  <td class = "hora" >18:00</td>
+                  <td><input type="text" class ="atividade" placeholder="Digite a atividade"></td>
+                </tr>
+              </tbody>
+            </table>
+          <button
+            id="updateButton"
+            class="button"
+            type="submit"
+            style="display: block; margin: 0 auto;"
+            >
+            Atualizar
+          </button>  
+       </form>
+       <div id="responseMessage"></div>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{url_for('static', filename='js/pages/rotina.js')}}"></script>
+{% endblock %}

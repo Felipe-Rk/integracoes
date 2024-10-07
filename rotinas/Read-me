@@ -1,0 +1,35 @@
+Rotinas 
+
+>CSS
+
+- rotina_relatorio: Define estilos para a estrutura da página do relatório com uso de containers flexíveis, 
+sombras, cores de fundo escuras, centralização de texto, e uma tabela com células espaçadas. 
+Destaque para o uso de cores como laranja e cinza escuro.
+rotina_selecao: Estiliza o layout da página de seleção, com destaque para fundo escuro, botões com hover, 
+e campos de seleção. Utiliza flexbox para centralizar o conteúdo.
+
+- rotina: Estilos aplicados ao formulário de rotinas. Usa largura fixa, espaçamento e sombras. 
+Foco em campos de input com preenchimento, e botões com cores destacadas e hover em verde.
+
+> Ferramentas/rotinas (Python - Flask)
+
+
+- rotina: Rota para exibir os relatórios diários registrados no banco de dados MongoDB. Coleta registros e 
+formata datas para exibição.
+rotina_selecao: Rota para a seleção de usuários e meses disponíveis. Utiliza dados do MongoDB e funções 
+auxiliares para listar meses e usuários.
+
+- rotina_relatorio: Filtra registros de rotinas por data ou mês, compara os dados com o banco e renderiza o 
+relatório de atividades conforme os filtros aplicados.
+analisar_rotina_relatorio: Verifica se uma rotina já existe no banco de dados e, caso encontre horários 
+sem tarefas preenchidas, atualiza com as novas entradas. Se não houver registro anterior, cria um novo.
+
+> JavaScript
+- Manipula eventos para facilitar a navegação entre os campos de atividade (com Enter) e captura as 
+informações inseridas para envio via fetch na rota /rotina/form_atividades. Implementa validações de 
+sucesso ou erro no envio do formulário.
+
+> Models
+- Rotinas: Modelo MongoDB para armazenar tarefas e horários associados às rotinas. Define campos para 
+horários e tarefas de cada registro.
+Rotina: Modelo principal que encapsula múltiplas rotinas de usuários, associando-as a uma data específica.

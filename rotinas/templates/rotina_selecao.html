@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Relatório Diário{% endblock %}
+
+{% block head %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<link rel="stylesheet" href="../../static/css/pages/rotina_selecao.css"
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="container">
+        <h1>Relatório Diário</h1>
+        <form action="{{ url_for('ferramentas.rotina_relatorio') }}" method="GET" onsubmit="return dataNone(event);">
+            <label for="user">Usuário:</label>
+            <select name="user" id="user">
+                {% for user in users %}
+                    <option value="{{user.id }}|{{user.nome}}">{{ user.nome }}</option>
+                {% endfor %}
+            </select>
+            <div id="divMonth">
+                <label for="month">Consulta por mês:</label>
+                    <select name="month" id="month" onchange="toggleDiv()">
+                        <option value="">Selecione</option>
+                        {% for month in months %}
+                        <option value="{{ month.value }}" >{{ month.label }}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+            <div id="divDate">
+                <label for="data">Consulta por Data:</label>
+                    <input id="date" name="data" type="date" value="date"  onchange="toggleDiv()" />  
+            </div>
+            <div class="button-container">
+                <button type="submit" class="button">Visualizar Relatório</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const loadingIndicator = document.getElementById("loadingIndicator");
+    const form = document.querySelector(".main-container form");
+    form.addEventListener("submit", function (event) {
+    loadingIndicator.style.display = "flex";
+    });
+    window.addEventListener("pageshow", function (event) {
+    if (event.persisted || window.performance.navigation.type === 2) {
+        loadingIndicator.style.display = "none";
+    }
+    });
+});
+function toggleDiv() {
+            var monthSelect = document.getElementById('month');
+            var dataSelect = document.getElementById('date');
+            var dataDiv = document.getElementById('divDate');
+            var divMonth = document.getElementById('divMonth');
+            if (monthSelect.value) {
+                dataDiv.style.display = 'none';
+            } 
+            else if (dataSelect.value) {
+                divMonth.style.display = 'none';
+            } 
+            else {
+                dataDiv.style.display = 'block';
+            }
+        };
+
+        
+        document.getElementById('divDate').style.display = 'block';
+        document.getElementById('divMonth').style.display = 'block';
+
+
+function dataNone(event){
+    
+    var dataNone = document.getElementById('date');
+    var monthNone = document.getElementById('month');
+
+    if (dataNone.value|| monthNone.value){
+        return true;
+    }else{
+        alert('Campo DATA ou MÊS não podem ficar vazios!');
+        event.preventDefault();
+        location.reload();
+        return false;
+}}
+
+
+</script>
+{% endblock %}

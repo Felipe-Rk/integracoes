@@ -1,0 +1,41 @@
+.form_rotina {
+    width: 95%; /* Define a largura do formulário */
+    max-width: 95%; /* Define a largura máxima */
+    margin: 0 auto; /* Centraliza o formulário na página */
+    padding: 4px; /* Adiciona espaçamento interno */
+    border: 1px solid #ccc; /* Adiciona uma borda */
+    border-radius: 10px; /* Arredonda os cantos */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra */
+}
+
+/* Estilo para os campos de entrada */
+input, textarea {
+    width: 100%; /* Define a largura dos campos */
+    padding: 10px; /* Adiciona espaçamento interno */
+    margin-bottom: 10px; /* Adiciona espaçamento inferior */
+    border: 1px solid #ccc; /* Adiciona uma borda */
+    border-radius: 5px; /* Arredonda os cantos */
+}
+
+.form-table{
+    width: 100%;
+}
+
+td{
+    text-align: center;
+}
+h1 {
+    text-align: center;
+}
+
+.button{
+    background-color: rgb(238, 111, 7);
+}
+.button:hover{
+    background-color: green;
+}
+
+.hora{
+    width: 15%; /* Define a largura do formulário */
+    max-width: 20%; 
+}
