@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='ios/152.png') }}">
+  <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='ios/256.png') }}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #121212;
+      color: #ddd;
+    }
+
+    .form-signin {
+      width: 400px;
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-signin h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-signin input[type="text"],
+    .form-signin input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .form-signin button {
+      width: 100%;
+      padding: 10px;
+    }
+
+    .form-control {
+      border: 1px solid #555;
+      background-color: #1f1f1f;
+      color: #ddd;
+    }
+
+    .form-control:focus {
+      background-color: #1d1d1d;
+      color: #eee;
+    }
+
+    .alert {
+      display: block;
+      padding: 5px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+    }
+
+    .alert-info {
+      color: #31708f;
+      background-color: #d9edf7;
+      border-color: #bce8f1;
+    }
+
+    .alert-danger {
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+    }
+
+    .alert-warning {
+      color: #8a6d3b;
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+    }
+
+    .loading-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 40000;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #fff;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-signin">
+    <h2>Login</h2>
+    {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+      {{ error_message }}
+    </div>
+    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %} 
+      {% if messages %} 
+        {% for category, message in messages %}
+          <span class="alert alert-{{ category }}">{{ message }}</span>
+        {% endfor %} 
+      {% endif %} 
+    {% endwith %}
+    <form id="login-form" method="post">
+      <div class="form-group">
+        <input type="email" class="form-control" name="email" placeholder="Email" required autofocus>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" placeholder="Senha" required>
+      </div>
+      <button class="btn btn-primary" type="submit">Login</button>
+      <p class="text-center">Não tem uma conta? <a href="/auth/register">Registre-se</a></p>
+      <p class="text-center"><a href="/auth/recuperar_senha">Esqueceu sua senha?</a></p>
+      <br>
+      <button class="btn btn-info" onclick="openFacialRecognition()">Login com Reconhecimento Facial</button>
+    </form>
+  </div>
+  <div id="loadingIndicator" class="loading-indicator" style="display: none">
+    <div class="spinner"></div>
+  </div>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+
+    const loadingIndicator = document.getElementById("loadingIndicator");
+    
+    function openFacialRecognition() {
+      loadingIndicator.style.display = 'flex';
+      window.location.href = '/auth/facial-recognition-login';
+      loadingIndicator.style.display = 'none';
+    }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register("/sw.js").then(function (registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      loadingIndicator.style.display = 'flex';
+    });
+  </script>
+</body>
+
+</html>

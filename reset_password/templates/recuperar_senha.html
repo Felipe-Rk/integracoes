@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Recuperar Senha</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #121212;
+      color: #ddd;
+    }
+
+    .form-reset {
+      width: 400px;
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-reset h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-reset input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .form-reset button {
+      width: 100%;
+      padding: 10px;
+    }
+
+    .form-control {
+      border: 1px solid #555;
+      background-color: #1f1f1f;
+      color: #ddd;
+    }
+
+    .form-control:focus {
+      background-color: #1d1d1d;
+      color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 form-reset">
+        <h2 class="text-center">Recuperar Senha</h2>
+        <form method="post">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

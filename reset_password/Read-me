@@ -1,0 +1,39 @@
+api/reset_password
+reset_password.py: Módulo de rotas em Python usando Flask para gerenciar a recuperação e alteração de 
+senhas. Este arquivo define duas rotas principais:
+
+/recuperar_senha: Rota POST para recuperar a senha do usuário. Recebe um JSON com o email do usuário e 
+executa os seguintes passos:
+
+Gera uma nova senha temporária usando a função generate_random_password.
+Atualiza o usuário no banco de dados com a nova senha temporária.
+Envia um email ao usuário com a nova senha usando o MensagemService.
+/change_password: Rota POST para alterar a senha do usuário. Requer que o usuário esteja autenticado e 
+recebe um JSON com a senha_atual, nova_senha e confirmacao_nova_senha. Executa os seguintes passos:
+
+Verifica se a nova_senha e confirmacao_nova_senha coincidem.
+Verifica se a senha_atual está correta.
+Atualiza a senha do usuário no banco de dados.
+models/user
+user.py: Modelo de dados definido usando MongoDB e a biblioteca MongoEngine. Estrutura o modelo de usuário
+no banco de dados e inclui funcionalidades relacionadas à autenticação e gestão de senhas.Campos e métodos principais:
+
+Campos:
+
+email, password_hash, temporary_password, roles, active.
+Métodos:
+
+set_password: Define a senha do usuário.
+check_password: Verifica a senha do usuário.
+checkIfHasImage: Verifica se o usuário possui uma imagem de reconhecimento facial.
+get_users: Retorna todos os usuários.
+has_role: Verifica se o usuário possui um determinado papel.
+is_admin: Verifica se o usuário é administrador.
+services/routes
+routes.py: Serviço que implementa funções auxiliares para as rotas de recuperação e alteração de senha.
+
+Função generate_random_password: Gera uma senha aleatória com 12 caracteres, combinando letras maiúsculas,
+minúsculas e dígitos.
+
+
+Tecnologias: Python, Flask, MongoDB, MongoEngine, Flask-Login
