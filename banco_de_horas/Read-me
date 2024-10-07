@@ -1,0 +1,26 @@
+BANCO DE HORAS
+
+css/banco_horas.css: Arquivo de estilos CSS que define a aparência da interface do sistema de banco de horas. Ele utiliza um layout responsivo
+para formulários, rótulos, botões, e containers principais.
+
+>ferramentas/banco_horas.py: Módulo principal em Python usando Flask para gerenciar as rotas e exibir a interface do banco de horas.
+Este arquivo faz a conexão entre a camada de visualização e a lógica de negócio. Ele carrega a lista de usuários, permite a seleção de períodos 
+(semana ou mês), e gera relatórios de horas trabalhadas e horas de almoço. O cálculo das horas trabalhadas e de almoço é feito ao recuperar os 
+registros de entrada e saída de cada dia e calcular as diferenças entre os horários.
+
+-Cálculos: O sistema calcula o total de horas trabalhadas e de almoço a partir dos horários registrados de entrada, saída, início e fim do almoço.
+Ele compara as horas reais com as horas esperadas (40 horas de trabalho por semana e 5 horas de almoço) e gera um saldo positivo ou negativo.
+
+
+> models/banco_horas.py: Modelo de dados definido usando MongoDB e a biblioteca MongoEngine. Ele estrutura o banco de horas no banco de dados,
+ armazenando as informações relevantes de cada usuário, como horários de entrada, saída, e períodos de almoço, permitindo uma recuperação 
+ eficiente para os relatórios e cálculos.
+
+
+>service/envio_relatorio_horas.py: Serviço responsável por automatizar o envio de relatórios semanais de banco de horas para os usuários.
+Utiliza APScheduler para agendar tarefas periódicas, enviando os relatórios toda segunda-feira às 9h. O serviço formata os dados de horas trabalhadas e horas de almoço da semana anterior e envia mensagens detalhadas aos usuários via MensagemService.
+
+- Cálculos: Para cada usuário, o sistema calcula o total de horas trabalhadas e de almoço na semana anterior e compara com os valores esperados. Caso haja desvios, os horários em desacordo são destacados no relatório.
+
+
+Tecnologias: Python, APScheduler, Flask, MongoDB, MongoEngine, MensagemService,Flask, Flask-Login, Jinja2, html.

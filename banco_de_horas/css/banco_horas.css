@@ -1,0 +1,84 @@
+/* Estilos para o formulário */
+form {
+  margin-top: 20px;
+}
+
+/* Estilos para rótulos e campos de entrada */
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+select,
+input[type="date"] {
+  background-color: #fff;
+  color: #000;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  /* Borda cinza claro */
+  background-color: #ffffff;
+  /* Fundo branco */
+  color: #333;
+  /* Texto cinza escuro */
+}
+/* Estilos para o botão de envio */
+.button-container {
+  margin-top: 15px;
+  text-align: center;
+
+}
+
+.button {
+  background-color: #e96443;
+  /* Botão laranja */
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+/* Estilos para títulos e texto */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+/* Estilos para container principal */
+.main-container {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #333;
+  /* Fundo da tela cinza escuro */
+  color: #ffffff;
+  /* Texto branco */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+.main-container {
+  .container {
+    background: #1f1f1f;
+    /* Fundo do container cinza */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+  }
+}

@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Banco de Horas{% endblock %}
+
+{% block head %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/pages/banco_horas.css') }}"
+/>
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="container">
+        <h1>Banco de Horas</h1>
+        <tag>Selecione o Usuário e o Período da consulta:</tag>
+        <form action="{{ url_for('ferramentas.banco_horas_relatorio') }}" method="get">
+            <label for="user">Usuário:</label>
+            <select name="user" id="user">
+                <option value="todos">Todos</option>
+                {% for user in users %}
+                    <option value="{{ user['_id'] }}">{{ user['nome'] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="selection_type">Selecionar por:</label>
+            <select name="selection_type" id="selection_type" onchange="toggleDateSelection()">
+                <option value="month">Mês</option>
+                <option value="week">Semana</option>
+            </select>
+
+            <div id="month_selection" style="display: none;">
+                <label for="month">Mês:</label>
+                <select name="month" id="month" onchange="updateWeekOptions()">
+                    {% for month in months %}
+                        <option value="{{ month['value'] }}">{{ month['label'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="week_selection" style="display: none;">
+                <label for="week">Semana:</label>
+                <select name="week" id="week"></select>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="button button-green">Gerar Relatório</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function toggleDateSelection() {
+        var selectionType = document.getElementById("selection_type").value;
+        var monthSelection = document.getElementById("month_selection");
+        var weekSelection = document.getElementById("week_selection");
+
+        if (selectionType === "month") {
+            monthSelection.style.display = "block";
+            weekSelection.style.display = "none";
+        } else {
+            monthSelection.style.display = "block";
+            weekSelection.style.display = "block";
+        }
+    }
+
+    function updateWeekOptions() {
+    var selectedMonth = document.getElementById("month").value;
+    var weekOptions = document.getElementById("week");
+    weekOptions.innerHTML = "";
+
+    var [year, month] = selectedMonth.split('-').map(Number);
+    var firstDayOfMonth = new Date(year, month - 1, 1);
+    var lastDayOfMonth = new Date(year, month, 0);
+
+    // Ajusta para a primeira segunda-feira ou anterior do mês
+    var startOfWeek = new Date(firstDayOfMonth);
+    while (startOfWeek.getDay() !== 1) {
+        startOfWeek.setDate(startOfWeek.getDate() - 1);
+    }
+
+    var weekNumber = 1;
+
+    while (startOfWeek <= lastDayOfMonth) {
+        var endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(endOfWeek.getDate() + 6);
+
+        var option = document.createElement("option");
+        option.value = weekNumber;
+        option.text = `${weekNumber}ª semana - ${startOfWeek.toLocaleDateString()} a ${endOfWeek.toLocaleDateString()}`;
+        weekOptions.appendChild(option);
+        weekNumber++;
+
+        // Move para a próxima segunda-feira
+        startOfWeek.setDate(startOfWeek.getDate() + 7);
+    }
+}
+
+    function generateReport() {
+        var user = document.getElementById("user").value;
+        var month = document.getElementById("month").value;
+        var week = document.getElementById("week").value;
+
+        var weekOptions = document.getElementById("week");
+        var selectedWeekText = weekOptions.options[weekOptions.selectedIndex].text;
+        var dateRange = selectedWeekText.split(' - ')[1];
+
+        var url = `/relatorio-banco-horas?user_id=${user}&selected_week=${dateRange}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => console.error('Erro ao gerar relatório:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        toggleDateSelection();
+        updateWeekOptions();
+    });
+</script>
+{% endblock %}

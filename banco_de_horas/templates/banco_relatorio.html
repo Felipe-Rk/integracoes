@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Banco Relatório{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/relatorio_banco.css') }}"/>
+{% endblock %}
+{% block content %}
+<div class="main-container">
+    <div class="container">
+        <div class="table-container">
+            <div class="table">
+                <h2>Usuário: {{ user_name }}</h2>
+                <table border="1">
+                    <caption>Relatório de Banco de Horas</caption>
+                    <tbody>
+                        {% for user_id, user_name, entries, total_worked_hours, total_lunch_hours, work_hours_diff, lunch_hours_diff, total_required_work_hours, total_required_lunch_hours in time_entries %}
+                            <table>    
+                                <thead>
+                                    <tr>
+                                        <th colspan="10" class="cabecalho">{{ start_date }} até {{ end_date }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="10">Funcionário - {{ user_name }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Entrada</th>
+                                        <th>Almoço</th>
+                                        <th>Retorno Almoço</th>
+                                        <th>Saída</th>
+                                        <th>------</th>
+                                        <th>Hrs Diárias Trabalhadas</th>
+                                        <th>Hrs Diárias Almoço</th>
+                                    </tr>
+                                </thead>
+                                {% for entry in entries %}
+                                    <tr>
+                                        <td>{{ entry['entry_date_br'] }}</td>
+                                        <td class="{% if entry.marcacao_entrada %}marcacao{% endif %}">{{ entry['entry_time'] if entry['entry_time'] != 'N/A' else '-' }}</td>
+                                        <td class="{% if entry.marcacao_lanche %}marcacao{% endif %}">{{ entry['lunch_time'] if entry['lunch_time'] != 'N/A' else '-' }}</td>
+                                        <td class="{% if entry.marcacao_retorno_lanche %}marcacao{% endif %}">{{ entry['lunch_return_time'] if entry['lunch_return_time'] != 'N/A' else '-' }}</td>
+                                        <td class="{% if entry.marcacao_saida %}marcacao{% endif %}">{{ entry['exit_time'] if entry['exit_time'] != 'N/A' else '-' }}</td>
+                                        <td>------</td>
+                                        <td>
+                                            {% if entry['total_worked_hours'] != 'N/A' %}
+                                                {% if entry['total_worked_hours'] < 1 %}
+                                                    {{ (entry['total_worked_hours'] * 60)|round(0, 'floor')|int }} min
+                                                {% else %}
+                                                    {{ "%.2f"|format(entry['total_worked_hours']) }} Hs
+                                                {% endif %}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if entry['total_lunch_hours'] != 'N/A' %}
+                                                {% if entry['total_lunch_hours'] < 1 %}
+                                                    {{ (entry['total_lunch_hours'] * 60)|round(0, 'floor')|int }} min
+                                                {% else %}
+                                                    {{ "%.2f"|format(entry['total_lunch_hours']) }} Hs
+                                                {% endif %}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>    
+                            <table>
+                                <tr>
+                                    <td colspan="6" class="resumo_relatorio"><strong>Horas Obrigatórias</strong></td>
+                                    <td class="resumo_relatorio"><strong>{{ total_required_work_hours }} Hs</strong></td>
+                                    <td class="resumo_relatorio"><strong>{{ total_required_lunch_hours }} Hs</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="resumo_relatorio"><strong>Horas totais cumpridas</strong></td>
+                                    <td class="resumo_relatorio"><strong>{{ "%.2f"|format(total_worked_hours) if total_worked_hours != 'N/A' else '-' }} Hs</strong></td>
+                                    <td class="resumo_relatorio"><strong>{{ "%.2f"|format(total_lunch_hours) if total_lunch_hours != 'N/A' else '-' }} Hs</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="resumo_relatorio"><strong>Banco de Horas</strong></td>
+                                    <td class="resumo_relatorio"><strong>{{ work_hours_diff|round(2) }} Hs</strong></td>
+                                    <td class="resumo_relatorio"><strong>{{ lunch_hours_diff|round(2) }} Hs</strong></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10">
+                                        <span style="background-color: orange; display: inline-block; width: 15px; height: 15px;"></span> Cabeçalho 
+                                        <span style="background-color: red; display: inline-block; width: 15px; height: 15px;"></span> -8h de trabalho & -1h de almoço 
+                                        <span style="background-color: green; display: inline-block; width: 15px; height: 15px;"></span> Resumo 
+                                    </td>
+                                </tr>
+                            </table>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
