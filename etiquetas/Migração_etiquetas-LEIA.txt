@@ -1,0 +1,44 @@
+Descrição das Alterações
+
+Remoção do Objeto de Etiqueta dentro da Subtarefa
+>>Remover a definição da classe Etiqueta dentro do modelo SubTarefa.
+
+Adição de Nova Tabela de Etiqueta
+>> Criar uma nova tabela Etiqueta com os campos ID, Nome e Cor.
+
+Atualização das Subtarefas para Referenciar Etiquetas por ID
+>> Adicionar um novo campo de referência de etiqueta dentro da subclasse SubTarefa, referenciando pelo ID.
+
+Alteração no Botão de Criar Coluna
+>> Atualizar o botão “+” para adicionar coluna e criar etiqueta na nova versão.
+
+Novas Rotas para Criação e Vinculação de Etiquetas (SOMENTE ADM)
+>> Criar novas rotas para adicionar etiquetas, atribuindo um ID aleatório no banco de dados.
+Verificar se já existe etiqueta com o mesmo nome ou cor antes de criar uma nova.
+
+Novo Método Estático para Conversão de Etiquetas
+>> Implementar um método estático para conversão de etiquetas de JSON para String, que pode ser reutilizado.
+Observação: As etiquetas não aparecerão nas subtarefas até que a rota de atualização seja executada.
+
+>>>>>>>>>>>>Passos para Executar a Migração
+
+>> Iniciar o Servidor
+
+Executar a Rota de Migração
+>> Utilize a rota criada para migração: /tarefas/subtarefas/atualizar-subtarefas.
+Exemplo: https://192.168.5.75:9000/ferramentas/tarefas/subtarefas/atualizar-subtarefas.
+Será impresso no terminal a execução da migração das etiquetas.
+
+Remover Código Antigo Após Migração
+>> Após a migração, comentar ou deletar as seguintes linhas:
+App/models/tarefa.py/SubTarefa
+
+- class Etiqueta(db.EmbeddedDocument): #comentar um excluir a classe antiga de etiquetas.
+    nome = db.StringField()
+    cor = db.StringField()
+
+- etiquetas = db.ListField(db.EmbeddedDocumentField(Etiqueta)) #modelo antigo - apagar após migrar.
+
+
+App/ferramentas/routes/tarefas/atualizar_subtarefas 
+>> (Função inteira)

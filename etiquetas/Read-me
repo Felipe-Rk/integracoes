@@ -1,0 +1,34 @@
+Sistema de Gerenciamento de Etiquetas
+
+> api/etiquetas
+
+- api/etiquetas.py: Módulo de rotas em Python usando Flask para gerenciar a criação e consulta de etiquetas. 
+Este arquivo define duas rotas principais:
+/etiquetas/criar: Rota POST para adicionar novas etiquetas. Recebe um JSON com uma lista de etiquetas,
+cada uma contendo nome e cor. Verifica se a etiqueta já existe antes de criar uma nova.
+/etiquetas/consultar: Rota GET para consultar todas as etiquetas existentes. Utiliza o serviço 
+SubtarefaService para buscar as etiquetas do banco de dados e retorna um JSON com as informações.
+
+> models/etiquetas
+
+- models/etiquetas.py: Modelo de dados definido usando MongoDB e a biblioteca MongoEngine. Estrutura o 
+modelo de etiquetas no banco de dados, armazenando o id, nome, e cor de cada etiqueta.
+
+
+> models/tarefa
+
+- models/tarefa.py: Modelo de dados que define a estrutura de tarefas e subtarefas. Inclui várias classes embutidas.
+Etiqueta: Modelo embutido para armazenar nome e cor de etiquetas.
+Coluna: Define colunas com nome e cor.
+SubTarefa: Modelo embutido para subtarefas, contendo informações como titulo, responsaveis, etiquetas 
+(referenciando o modelo Etiquetas), entre outros.
+Tarefa: Modelo principal para tarefas, incluindo campos como responsaveis, nome, descricao, status, 
+subtarefas, e outras informações relevantes para o gerenciamento de tarefas.
+
+> services/tarefas
+
+services/tarefas.py: Serviço responsável por operações relacionadas a tarefas e subtarefas. Contém a classe SubtarefaService com métodos estáticos para:
+converter_etiquetas: Converte IDs de etiquetas em objetos de etiqueta, retornando uma lista de dicionários com id, nome, e cor.
+get_etiquetas: Recupera todas as etiquetas do banco de dados e as serializa para um formato adequado para resposta JSON.
+
+Tecnologias: Python, Flask, Flask-Login, MongoDB, MongoEngine.
